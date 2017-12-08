@@ -14,8 +14,9 @@ class Crawler:
         self.crawlDelay={}
         self.pageCnt=0
         self.totUrlList=[]
-#below parses the robots.txt file if found. Otherwise it defaults to 5 second delay
+
     def parseRobots(self, curPage):
+        #below parses the robots.txt file if found. Otherwise it defaults to 5 second delay
         parsedUrl=urlparse.urlparse(curPage)
         robots=parsedUrl.scheme + "://"+ parsedUrl.netloc +"/robots.txt"
         try:
@@ -44,8 +45,9 @@ class Crawler:
             self.crawlDelay[parsedUrl.netloc]=5
             self.robots[parsedUrl.netloc]=[]
             return
-#below parses webpages. If version a is passed, then cs.umass.edu must be in url
+
     def parseWebPages(self,curPage,version):
+        #below parses webpages. If version a is passed, then cs.umass.edu must be in url
         try:
             response=urllib2.urlopen(curPage).read()
         except urllib2.HTTPError as e:
@@ -69,9 +71,10 @@ class Crawler:
                             else:
                                 urlList=urlList+[temp]
         return urlList[:]
-#crawlerthread makes sure that robots is followed and crawls
-#can set crawl limit and version
+
     def crawlerThread(self,limit,version):
+        #crawlerthread makes sure that robots is followed and crawls
+        #can set crawl limit and version
         flag=True
         while len(self.fringe)>0 and len(self.totUrlList)<limit:
             flag=True
